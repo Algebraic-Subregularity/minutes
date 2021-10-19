@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <meta name="author" content="Dakotah Lambert" />
+  <title>Introduction</title>
+  <style>
+    html {
+      line-height: 1.5;
+      font-family: Georgia, serif;
+      font-size: 20px;
+      color: #1a1a1a;
+      background-color: #fdfdfd;
+    }
+    body {
+      margin: 0 auto;
+      max-width: 36em;
+      padding-left: 50px;
+      padding-right: 50px;
+      padding-top: 50px;
+      padding-bottom: 50px;
+      hyphens: auto;
+      overflow-wrap: break-word;
+      text-rendering: optimizeLegibility;
+      font-kerning: normal;
+    }
+    @media (max-width: 600px) {
+      body {
+        font-size: 0.9em;
+        padding: 1em;
+      }
+    }
+    @media print {
+      body {
+        background-color: transparent;
+        color: black;
+        font-size: 12pt;
+      }
+      p, h2, h3 {
+        orphans: 3;
+        widows: 3;
+      }
+      h2, h3, h4 {
+        page-break-after: avoid;
+      }
+    }
+    p {
+      margin: 1em 0;
+    }
+    a {
+      color: #1a1a1a;
+    }
+    a:visited {
+      color: #1a1a1a;
+    }
+    img {
+      max-width: 100%;
+    }
+    h1, h2, h3, h4, h5, h6 {
+      margin-top: 1.4em;
+    }
+    h5, h6 {
+      font-size: 1em;
+      font-style: italic;
+    }
+    h6 {
+      font-weight: normal;
+    }
+    ol, ul {
+      padding-left: 1.7em;
+      margin-top: 1em;
+    }
+    li > ol, li > ul {
+      margin-top: 0;
+    }
+    blockquote {
+      margin: 1em 0 1em 1.7em;
+      padding-left: 1em;
+      border-left: 2px solid #e6e6e6;
+      color: #606060;
+    }
+    code {
+      font-family: Menlo, Monaco, 'Lucida Console', Consolas, monospace;
+      font-size: 85%;
+      margin: 0;
+    }
+    pre {
+      margin: 1em 0;
+      overflow: auto;
+    }
+    pre code {
+      padding: 0;
+      overflow: visible;
+      overflow-wrap: normal;
+    }
+    .sourceCode {
+     background-color: transparent;
+     overflow: visible;
+    }
+    hr {
+      background-color: #1a1a1a;
+      border: none;
+      height: 1px;
+      margin: 1em 0;
+    }
+    table {
+      margin: 1em 0;
+      border-collapse: collapse;
+      width: 100%;
+      overflow-x: auto;
+      display: block;
+      font-variant-numeric: lining-nums tabular-nums;
+    }
+    table caption {
+      margin-bottom: 0.75em;
+    }
+    tbody {
+      margin-top: 0.5em;
+      border-top: 1px solid #1a1a1a;
+      border-bottom: 1px solid #1a1a1a;
+    }
+    th {
+      border-top: 1px solid #1a1a1a;
+      padding: 0.25em 0.5em 0.25em 0.5em;
+    }
+    td {
+      padding: 0.125em 0.5em 0.25em 0.5em;
+    }
+    header {
+      margin-bottom: 4em;
+      text-align: center;
+    }
+    #TOC li {
+      list-style: none;
+    }
+    #TOC a:not(:hover) {
+      text-decoration: none;
+    }
+    code{white-space: pre-wrap;}
+    span.smallcaps{font-variant: small-caps;}
+    span.underline{text-decoration: underline;}
+    div.column{display: inline-block; vertical-align: top; width: 50%;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    ul.task-list{list-style: none;}
+    .display.math{display: block; text-align: center; margin: 0.5rem auto;}
+  </style>
+  <!--[if lt IE 9]>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv-printshiv.min.js"></script>
+  <![endif]-->
+</head>
+<body>
+<header id="title-block-header">
+<h1 class="title">Introduction</h1>
+<p class="author">Dakotah Lambert</p>
+</header>
+<ul>
+<li>A monoid is a set with an associative operation and an identity
+<ul>
+<li>Here we considered the free monoid over Σ={a,b,c}, Σ*</li>
+<li>This is all possible sequences of these letters, with concatenation</li>
+<li>The identity is the empty sequence</li>
+</ul></li>
+<li>A formal language 𝐿 is a set of words, a set of sequences.</li>
+<li>Nerode equivalence
+<ul>
+<li>𝑥 ~ₙ 𝑦 iff for all 𝑣, 𝑥⁢𝑣∈𝐿 ⟺ 𝑦⁢𝑣∈𝐿</li>
+<li>Equivalence classes define a minimal DFA</li>
+<li>Even-a has two classes: ⟦λ⟧ and ⟦a⟧</li>
+<li>There is a union of classes equal to 𝐿: here ⋃{⟦λ⟧}</li>
+<li>One-sided, caring only about distinguishability by suffixes</li>
+</ul></li>
+<li>Myhill equivalence
+<ul>
+<li>Accounts for distinguishability by prefixes or circumfixes too</li>
+<li>𝑥 ~ₘ 𝑦 iff for all 𝑢 and 𝑣, 𝑢⁢𝑥⁢𝑣∈𝐿 ⟺ 𝑢⁢𝑦⁢𝑣∈𝐿</li>
+<li>A refinement of the Nerode equivalence: can (only) split classes</li>
+<li>A congruence, so Σ*/~ₘ remains a monoid!</li>
+<li>This is the <strong>syntactic monoid</strong>.</li>
+<li>The smallest monoid for which a union of classes can equal to 𝐿</li>
+<li>Construct the functions from the minimal DFA</li>
+<li>For even-a, the two relations are identical!</li>
+<li>¬a⁢a has only three Nerode classes, but six Myhill classes</li>
+</ul></li>
+<li>Semigroups: Σ⁺ is Σ* without λ. Keep ⟦λ⟧ iff reachable.</li>
+<li>¬a⁢a
+<ul>
+<li>Table below</li>
+<li>⟦λ⟧ is the identity, we can call this 1: 1⁢𝑥=𝑥⁢1=1</li>
+<li>⟦aa⟧ is zero: 0⁢𝑥=𝑥⁢0=0</li>
+<li>Forbidden factors like this are always 0</li>
+<li>The main diagonal of the table is 𝑥²</li>
+<li>Idempotents E(M) are where 𝑥²=𝑥: everything but ⟦a⟧</li>
+<li>Preview: most of the classification problems are based on E(M)</li>
+</ul></li>
+</ul>
+<table>
+<thead>
+<tr class="header">
+<th style="text-align: right;">⋅</th>
+<th style="text-align: right;">λ</th>
+<th style="text-align: right;">a</th>
+<th style="text-align: right;">b</th>
+<th style="text-align: right;">ab</th>
+<th style="text-align: right;">ba</th>
+<th style="text-align: right;">aa</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: right;">λ</td>
+<td style="text-align: right;">λ</td>
+<td style="text-align: right;">a</td>
+<td style="text-align: right;">b</td>
+<td style="text-align: right;">ab</td>
+<td style="text-align: right;">ba</td>
+<td style="text-align: right;">aa</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">a</td>
+<td style="text-align: right;">a</td>
+<td style="text-align: right;">aa</td>
+<td style="text-align: right;">ab</td>
+<td style="text-align: right;">aa</td>
+<td style="text-align: right;">a</td>
+<td style="text-align: right;">aa</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">b</td>
+<td style="text-align: right;">b</td>
+<td style="text-align: right;">ba</td>
+<td style="text-align: right;">b</td>
+<td style="text-align: right;">b</td>
+<td style="text-align: right;">ba</td>
+<td style="text-align: right;">aa</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">ab</td>
+<td style="text-align: right;">ab</td>
+<td style="text-align: right;">a</td>
+<td style="text-align: right;">ab</td>
+<td style="text-align: right;">ab</td>
+<td style="text-align: right;">a</td>
+<td style="text-align: right;">aa</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">ba</td>
+<td style="text-align: right;">ba</td>
+<td style="text-align: right;">aa</td>
+<td style="text-align: right;">b</td>
+<td style="text-align: right;">aa</td>
+<td style="text-align: right;">ba</td>
+<td style="text-align: right;">aa</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">aa</td>
+<td style="text-align: right;">aa</td>
+<td style="text-align: right;">aa</td>
+<td style="text-align: right;">aa</td>
+<td style="text-align: right;">aa</td>
+<td style="text-align: right;">aa</td>
+<td style="text-align: right;">aa</td>
+</tr>
+</tbody>
+</table>
+</body>
+</html>
