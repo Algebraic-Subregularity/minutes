@@ -1,0 +1,398 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <meta name="author" content="Dakotah Lambert" />
+  <title>The Semilattice Row</title>
+  <style>
+    html {
+      line-height: 1.5;
+      font-family: Georgia, serif;
+      font-size: 20px;
+      color: #1a1a1a;
+      background-color: #fdfdfd;
+    }
+    body {
+      margin: 0 auto;
+      max-width: 36em;
+      padding-left: 50px;
+      padding-right: 50px;
+      padding-top: 50px;
+      padding-bottom: 50px;
+      hyphens: auto;
+      overflow-wrap: break-word;
+      text-rendering: optimizeLegibility;
+      font-kerning: normal;
+    }
+    @media (max-width: 600px) {
+      body {
+        font-size: 0.9em;
+        padding: 1em;
+      }
+    }
+    @media print {
+      body {
+        background-color: transparent;
+        color: black;
+        font-size: 12pt;
+      }
+      p, h2, h3 {
+        orphans: 3;
+        widows: 3;
+      }
+      h2, h3, h4 {
+        page-break-after: avoid;
+      }
+    }
+    p {
+      margin: 1em 0;
+    }
+    a {
+      color: #1a1a1a;
+    }
+    a:visited {
+      color: #1a1a1a;
+    }
+    img {
+      max-width: 100%;
+    }
+    h1, h2, h3, h4, h5, h6 {
+      margin-top: 1.4em;
+    }
+    h5, h6 {
+      font-size: 1em;
+      font-style: italic;
+    }
+    h6 {
+      font-weight: normal;
+    }
+    ol, ul {
+      padding-left: 1.7em;
+      margin-top: 1em;
+    }
+    li > ol, li > ul {
+      margin-top: 0;
+    }
+    blockquote {
+      margin: 1em 0 1em 1.7em;
+      padding-left: 1em;
+      border-left: 2px solid #e6e6e6;
+      color: #606060;
+    }
+    code {
+      font-family: Menlo, Monaco, 'Lucida Console', Consolas, monospace;
+      font-size: 85%;
+      margin: 0;
+    }
+    pre {
+      margin: 1em 0;
+      overflow: auto;
+    }
+    pre code {
+      padding: 0;
+      overflow: visible;
+      overflow-wrap: normal;
+    }
+    .sourceCode {
+     background-color: transparent;
+     overflow: visible;
+    }
+    hr {
+      background-color: #1a1a1a;
+      border: none;
+      height: 1px;
+      margin: 1em 0;
+    }
+    table {
+      margin: 1em 0;
+      border-collapse: collapse;
+      width: 100%;
+      overflow-x: auto;
+      display: block;
+      font-variant-numeric: lining-nums tabular-nums;
+    }
+    table caption {
+      margin-bottom: 0.75em;
+    }
+    tbody {
+      margin-top: 0.5em;
+      border-top: 1px solid #1a1a1a;
+      border-bottom: 1px solid #1a1a1a;
+    }
+    th {
+      border-top: 1px solid #1a1a1a;
+      padding: 0.25em 0.5em 0.25em 0.5em;
+    }
+    td {
+      padding: 0.125em 0.5em 0.25em 0.5em;
+    }
+    header {
+      margin-bottom: 4em;
+      text-align: center;
+    }
+    #TOC li {
+      list-style: none;
+    }
+    #TOC a:not(:hover) {
+      text-decoration: none;
+    }
+    code{white-space: pre-wrap;}
+    span.smallcaps{font-variant: small-caps;}
+    span.underline{text-decoration: underline;}
+    div.column{display: inline-block; vertical-align: top; width: 50%;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    ul.task-list{list-style: none;}
+    .display.math{display: block; text-align: center; margin: 0.5rem auto;}
+  </style>
+  <!--[if lt IE 9]>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv-printshiv.min.js"></script>
+  <![endif]-->
+</head>
+<body>
+<header id="title-block-header">
+<h1 class="title">The Semilattice Row</h1>
+<p class="author">Dakotah Lambert</p>
+</header>
+<h2 id="review">Review:</h2>
+<p>In previous sessions, we’ve discussed the regular and star-free classes at the top of our finite-strucure hierarchy, and the trivial languages (𝟏) and extensions thereof at the bottom.</p>
+<h2 id="varieties">Varieties:</h2>
+<p>A variety 𝐕 of semigroups (or monoids) is a collection satisfying the following:</p>
+<ul>
+<li>𝐕 is closed under taking products: if 𝐀∈𝐕 and 𝐁∈𝐕, then 𝐀×𝐁∈𝐕</li>
+<li>𝐕 is closed under taking subsemigroups (or submonoids)</li>
+<li>𝐕 is closed under quotients</li>
+</ul>
+<p>These properties mean that any class of languages defined by having their syntactic monoids belong to some variety 𝐕 must necessarily be closed under the Boolean operations. The union and intersection are computed by</p>
+<ol type="1">
+<li>Finding the product of the state machines recognizing them (i.e. of their syntactic monoids),</li>
+<li>Finding the submonoid reachable from the start state, then</li>
+<li>Computing the quotient of the result over the Myhill relation.</li>
+</ol>
+<p>The first step produces some automaton, the second removes unreachable states, and the third merges those that remain to give us something minimal again. Using the Nerode relation instead of the Myhill relation would yield a canonical DFA, but that might not be a monoid.</p>
+<p>So this gives us closure under union and intersection. The fact that a language and its complement share the same monoid gives us closure under complementation. That’s all of the Boolean operations.</p>
+<h2 id="semilattices-a.k.a.-commutative-bands">Semilattices (a.k.a. Commutative Bands)</h2>
+<p>If you have a class of languages and you add restrictions, you get a subclass. Or if you remove restrictions, you get a superclass. Recall that a monoid is in 𝟏 iff it has just a single element, denoted 1. There’s only one such monoid, corresponding to two languages: Σ* and ∅. This monoid has the following properties:</p>
+<ul>
+<li>It’s commutative: 𝑎⁢𝑏=𝑏⁢𝑎 for all 𝑎 and 𝑏 (both can only be 1)</li>
+<li>It’s idempotent: 𝑎⁢𝑎=𝑎 for all 𝑎 (𝑎 can only be 1)</li>
+<li>It has inverses: for each 𝑎, there exists 𝑎⁻¹ such that 𝑎⁢𝑎⁻¹=𝑎⁻¹⁢𝑎=1 (both 𝑎 and its inverse are 1)</li>
+<li>It’s null: there exists an element 0 where 𝑎⁢𝑏=𝑏⁢𝑎=0 (here, 0=1)</li>
+</ul>
+<p>The class 𝐋𝟏 is a superclass of 𝟏 because rather than requiring the whole monoid to be in 𝟏, we only require its local subsemigroups 𝑒⁢𝑆⁢𝑒 to be in 𝟏. This is a relaxation of some properties. But we might also just decide to remove some from the above list. If we keep only the <strong>commutative</strong> and <strong>idempotent</strong> properties, we have a semilattice! That’s not a profound theorem or anything by the way, just the definition of what a semilattice is.</p>
+<p>Here is a sample language whose monoid is a semilattice: <br /> <img src="./na-or-nb-or-c.svg" alt="A state machine with five states, numbered 1 through 5. The start state is 1, and all states but 5 are accepting. State 1 has transitions to 4, 2, and 3 on a, b, and c respectively. State 2 has transitions to 5, 2, and 3 on a, b, and c respectively. State 3 is a sink. State 4 has transitions to 4, 5, and 3 on a, b, and c respectively. And state 5 has self-loops on a and b, and transitions to 3 on c." /> <br /> Its syntactic monoid is actually the same shape: <br /> <img src="./na-or-nb-or-c-mon.svg" alt="The preceding state machine, where states 1 through 5 have been relabeled as empty string, a, c, b, and ba, respectively." /></p>
+<table>
+<thead>
+<tr class="header">
+<th style="text-align: right;">⋅</th>
+<th style="text-align: right;">λ</th>
+<th style="text-align: right;">a</th>
+<th style="text-align: right;">b</th>
+<th style="text-align: right;">ba</th>
+<th style="text-align: right;">c</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: right;">λ</td>
+<td style="text-align: right;">λ</td>
+<td style="text-align: right;">a</td>
+<td style="text-align: right;">b</td>
+<td style="text-align: right;">ba</td>
+<td style="text-align: right;">c</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">a</td>
+<td style="text-align: right;">a</td>
+<td style="text-align: right;">a</td>
+<td style="text-align: right;">ba</td>
+<td style="text-align: right;">ba</td>
+<td style="text-align: right;">c</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">b</td>
+<td style="text-align: right;">b</td>
+<td style="text-align: right;">ba</td>
+<td style="text-align: right;">b</td>
+<td style="text-align: right;">ba</td>
+<td style="text-align: right;">c</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">ba</td>
+<td style="text-align: right;">ba</td>
+<td style="text-align: right;">ba</td>
+<td style="text-align: right;">ba</td>
+<td style="text-align: right;">ba</td>
+<td style="text-align: right;">c</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">c</td>
+<td style="text-align: right;">c</td>
+<td style="text-align: right;">c</td>
+<td style="text-align: right;">c</td>
+<td style="text-align: right;">c</td>
+<td style="text-align: right;">c</td>
+</tr>
+</tbody>
+</table>
+<p>Inspecting the main diagonal, each element is idempotent. But also, this main diagonal is a mirror; the monoid is commutative. Commutative and idempotent, it’s a semilattice.</p>
+<p>What does it <em>mean</em> for a language to be commutative and idempotent? Consider two words: “abacab” and “bacba”.</p>
+<ul>
+<li>By commutativity, we can swap adjacent letters</li>
+<li>Iterating this, ⟦abacab⟧ = ⟦aaabbc⟧ and ⟦bacba⟧ = ⟦aabbc⟧</li>
+<li>All elements are idempotent, 𝑥⁢𝑥=𝑥.</li>
+<li>So we can replicate letters as needed</li>
+<li>⟦aabbc⟧ = ⟦aaabbc⟧,</li>
+<li>So ⟦bacba⟧=⟦abacab⟧ — they must be treated identically</li>
+<li>This generalizes!</li>
+<li>𝐿 is a semilattice language (𝐂𝐁, for “commutative band”) iff words are treated identically whenever they contain the same set of letters.</li>
+<li>This is locally testable or piecewise testable for a factor width of 𝑘=1.</li>
+</ul>
+<h2 id="extensions">Extensions</h2>
+<p>Semilattices form a variety. So we can construct a “locally-” extension and a tier-based extension of that. “Locally a semilattice” turns out to be the same as “locally testable”, so we’ll denote it as such: LT.</p>
+<p>This is the DFA for the language in which all words contain “ab”: <br /> <img src="./ab.svg" alt="A DFA of three states, labeled 1 through 3. State 1 transitions to 2 on a, and has self-loops on b and c. State 2 transitions to 2, 3, or 1 on a, b, or c, respectively. State 3 is a sink, as well as being the only accepting state." /> <br /> Its syntactic monoid is as follows: <br /> <img src="./ab-mon.svg" alt="The syntactic monoid of the preceding DFA. There are six states: empty string, a, b, c, ab, and ba. The Cayley table is given below." /></p>
+<table>
+<thead>
+<tr class="header">
+<th style="text-align: right;">⋅</th>
+<th style="text-align: right;">λ</th>
+<th style="text-align: right;">a</th>
+<th style="text-align: right;">b</th>
+<th style="text-align: right;">c</th>
+<th style="text-align: right;">ba</th>
+<th style="text-align: right;">ab</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: right;">λ</td>
+<td style="text-align: right;">λ</td>
+<td style="text-align: right;">a</td>
+<td style="text-align: right;">b</td>
+<td style="text-align: right;">c</td>
+<td style="text-align: right;">ba</td>
+<td style="text-align: right;">ab</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">a</td>
+<td style="text-align: right;">a</td>
+<td style="text-align: right;">a</td>
+<td style="text-align: right;">ab</td>
+<td style="text-align: right;">c</td>
+<td style="text-align: right;">a</td>
+<td style="text-align: right;">ab</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">b</td>
+<td style="text-align: right;">b</td>
+<td style="text-align: right;">ba</td>
+<td style="text-align: right;">b</td>
+<td style="text-align: right;">b</td>
+<td style="text-align: right;">ba</td>
+<td style="text-align: right;">ab</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">c</td>
+<td style="text-align: right;">c</td>
+<td style="text-align: right;">a</td>
+<td style="text-align: right;">c</td>
+<td style="text-align: right;">c</td>
+<td style="text-align: right;">a</td>
+<td style="text-align: right;">ab</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">ba</td>
+<td style="text-align: right;">ba</td>
+<td style="text-align: right;">ba</td>
+<td style="text-align: right;">ab</td>
+<td style="text-align: right;">b</td>
+<td style="text-align: right;">ab</td>
+<td style="text-align: right;">ab</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">ab</td>
+<td style="text-align: right;">ab</td>
+<td style="text-align: right;">ab</td>
+<td style="text-align: right;">ab</td>
+<td style="text-align: right;">ab</td>
+<td style="text-align: right;">ab</td>
+<td style="text-align: right;">ab</td>
+</tr>
+</tbody>
+</table>
+<p>Notice that ⟦ba⟧ is not an idempotent, so this language isn’t in 𝐂𝐁. (It also lacks commutativity.) But let’s find 𝑒⁢𝑆⁢𝑒, remembering to exclude the empty string because we are in the semigroup and not the monoid. Recall that 𝑒 is an idempotent, 𝑒⁢𝑆 is everything reachable from it in the graph, and 𝑒⁢𝑆⁢𝑒 is the set you get when multiplying each element of 𝑒⁢𝑆 by 𝑒:</p>
+<table>
+<thead>
+<tr class="header">
+<th style="text-align: center;">𝑒</th>
+<th style="text-align: center;">𝑒⁢𝑆</th>
+<th style="text-align: center;">𝑒⁢𝑆⁢𝑒</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;">a</td>
+<td style="text-align: center;">{a, c, ab}</td>
+<td style="text-align: center;">{a, ab}</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">b</td>
+<td style="text-align: center;">{b, ba, ab}</td>
+<td style="text-align: center;">{b, ab}</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">c</td>
+<td style="text-align: center;">{a, c, ab}</td>
+<td style="text-align: center;">{c, ab}</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">ab</td>
+<td style="text-align: center;">{ab}</td>
+<td style="text-align: center;">{ab}</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li>As noted, 𝑀 isn’t idempotent or commutatitve, so the language isn’t in 𝐂𝐁</li>
+<li>The 𝑒⁢𝑆⁢𝑒 aren’t singleton, so the language isn’t Generalized Definite (𝐋𝟏)</li>
+<li>But each 𝑒⁢𝑆⁢𝑒 is itself in 𝐂𝐁 (try it, test the properties)</li>
+<li>The language is locally a semilattice — it’s LT</li>
+</ul>
+<p>And of course if we draw in self-loops everywhere on some new symbol d, then we have something tier-based locally testable, TLT.</p>
+<h2 id="summary">Summary</h2>
+<p>For any given variety 𝐕, there is a corresponding “locally” class 𝐋𝐕 and a tier-based extension of that, 𝐓𝐋𝐕. The 𝐋𝐕 is also a variety, but 𝐓𝐋𝐕 is not, as the latter is not closed under products. In the table below, inclusions hold downward and leftward.</p>
+<table>
+<thead>
+<tr class="header">
+<th style="text-align: center;">𝐕</th>
+<th style="text-align: center;">𝐋𝐕</th>
+<th style="text-align: center;">𝐓𝐋𝐕</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;">Reg</td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">SF</td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">𝐂𝐁</td>
+<td style="text-align: center;">LT</td>
+<td style="text-align: center;">TLT</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">𝟏</td>
+<td style="text-align: center;">GD</td>
+<td style="text-align: center;">TGD</td>
+</tr>
+</tbody>
+</table>
+<p>If we haven’t mentioned it yet, the variety of finite monoids (what regular languages are) is called 𝐅𝐢𝐧, and the aperiodic ones (for star-free) are 𝐀𝐩. Note: there is a language class called Fin, which should not be confused with the monoid variety 𝐅𝐢𝐧.</p>
+</body>
+</html>
