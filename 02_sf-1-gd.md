@@ -27,7 +27,7 @@ author: Dakotah Lambert
   + Include all base cases and inductive cases of regular expressions
   + More Inductive Cases
     - (R&S): ⟦(R&S)⟧ = ⟦R⟧∩⟦S⟧
-    - R̄: ⟦R̄⟧ = Σ\*−⟦R⟧
+    - $\overline{R}$: ⟦$\overline{R}$⟧ = Σ\*−⟦R⟧
   + No more powerful than standard regular expressions
   + Star-Free expressions forbid the \* operator
   + Σ\* is still definable as ∅̄
