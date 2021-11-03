@@ -22,7 +22,7 @@ author: Dakotah Lambert
   + Inductive Cases
     - (R⋅S): ⟦(R⋅S)⟧ = {𝑟⋅𝑠 : 𝑟∈⟦R⟧ and 𝑠∈⟦S⟧}
     - (R+S): ⟦(R+S)⟧ = ⟦R⟧∪⟦S⟧
-    - (R\*): ⟦(R+S)⟧ = ⟦R⟧∪⟦S⟧
+    - (R\*): ⟦(R+S)⟧ = ⟦R⟧*
 * Generalized Regular Expressions
   + Include all base cases and inductive cases of regular expressions
   + More Inductive Cases
