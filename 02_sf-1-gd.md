@@ -27,10 +27,11 @@ author: Dakotah Lambert
   + Include all base cases and inductive cases of regular expressions
   + More Inductive Cases
     - (R&S): ⟦(R&S)⟧ = ⟦R⟧∩⟦S⟧
-    - $\overline{R}$: ⟦$\overline{R}$⟧ = Σ\*−⟦R⟧
+    - cR: ⟦cR⟧ = Σ\*−⟦R⟧
   + No more powerful than standard regular expressions
   + Star-Free expressions forbid the \* operator
-  + Σ\* is still definable as ∅̄
+  + Σ\* is still definable as c∅̄
+  + (Jeff):I wrote 'cR' for complement of R because the bar is not coming out clearly
 * Star-Free and Regular are the most complex classes we'll see here
 * At the other extreme: trivial languages!
   + Denoted by 𝟏
