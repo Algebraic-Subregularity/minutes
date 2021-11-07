@@ -22,16 +22,15 @@ author: Dakotah Lambert
   + Inductive Cases
     - (R⋅S): ⟦(R⋅S)⟧ = {𝑟⋅𝑠 : 𝑟∈⟦R⟧ and 𝑠∈⟦S⟧}
     - (R+S): ⟦(R+S)⟧ = ⟦R⟧∪⟦S⟧
-    - (R\*): ⟦(R+S)⟧ = ⟦R⟧*
+    - (R\*): ⟦R\*⟧ = ⟦R⟧*
 * Generalized Regular Expressions
   + Include all base cases and inductive cases of regular expressions
   + More Inductive Cases
     - (R&S): ⟦(R&S)⟧ = ⟦R⟧∩⟦S⟧
-    - cR: ⟦cR⟧ = Σ\*−⟦R⟧
+    - ∁R: ⟦∁R⟧ = Σ\*−⟦R⟧
   + No more powerful than standard regular expressions
   + Star-Free expressions forbid the \* operator
-  + Σ\* is still definable as c∅̄
-  + (Jeff):I wrote 'cR' for complement of R because the bar is not coming out clearly
+  + Σ\* is still definable as ∁∅
 * Star-Free and Regular are the most complex classes we'll see here
 * At the other extreme: trivial languages!
   + Denoted by 𝟏

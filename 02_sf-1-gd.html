@@ -183,7 +183,7 @@
 <ul>
 <li>(R⋅S): ⟦(R⋅S)⟧ = {𝑟⋅𝑠 : 𝑟∈⟦R⟧ and 𝑠∈⟦S⟧}</li>
 <li>(R+S): ⟦(R+S)⟧ = ⟦R⟧∪⟦S⟧</li>
-<li>(R*): ⟦(R+S)⟧ = ⟦R⟧∪⟦S⟧</li>
+<li>(R*): ⟦R*⟧ = ⟦R⟧*</li>
 </ul></li>
 </ul></li>
 <li>Generalized Regular Expressions
@@ -192,11 +192,11 @@
 <li>More Inductive Cases
 <ul>
 <li>(R&amp;S): ⟦(R&amp;S)⟧ = ⟦R⟧∩⟦S⟧</li>
-<li>R̄: ⟦R̄⟧ = Σ*−⟦R⟧</li>
+<li>∁R: ⟦∁R⟧ = Σ*−⟦R⟧</li>
 </ul></li>
 <li>No more powerful than standard regular expressions</li>
 <li>Star-Free expressions forbid the * operator</li>
-<li>Σ* is still definable as ∅̄</li>
+<li>Σ* is still definable as ∁∅</li>
 </ul></li>
 <li>Star-Free and Regular are the most complex classes we’ll see here</li>
 <li>At the other extreme: trivial languages!
