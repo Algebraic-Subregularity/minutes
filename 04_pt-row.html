@@ -1,0 +1,435 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <meta name="author" content="Dakotah Lambert" />
+  <title>Piecewise Testable and Extensions</title>
+  <style>
+    html {
+      line-height: 1.5;
+      font-family: Georgia, serif;
+      font-size: 20px;
+      color: #1a1a1a;
+      background-color: #fdfdfd;
+    }
+    body {
+      margin: 0 auto;
+      max-width: 36em;
+      padding-left: 50px;
+      padding-right: 50px;
+      padding-top: 50px;
+      padding-bottom: 50px;
+      hyphens: auto;
+      overflow-wrap: break-word;
+      text-rendering: optimizeLegibility;
+      font-kerning: normal;
+    }
+    @media (max-width: 600px) {
+      body {
+        font-size: 0.9em;
+        padding: 1em;
+      }
+    }
+    @media print {
+      body {
+        background-color: transparent;
+        color: black;
+        font-size: 12pt;
+      }
+      p, h2, h3 {
+        orphans: 3;
+        widows: 3;
+      }
+      h2, h3, h4 {
+        page-break-after: avoid;
+      }
+    }
+    p {
+      margin: 1em 0;
+    }
+    a {
+      color: #1a1a1a;
+    }
+    a:visited {
+      color: #1a1a1a;
+    }
+    img {
+      max-width: 100%;
+    }
+    h1, h2, h3, h4, h5, h6 {
+      margin-top: 1.4em;
+    }
+    h5, h6 {
+      font-size: 1em;
+      font-style: italic;
+    }
+    h6 {
+      font-weight: normal;
+    }
+    ol, ul {
+      padding-left: 1.7em;
+      margin-top: 1em;
+    }
+    li > ol, li > ul {
+      margin-top: 0;
+    }
+    blockquote {
+      margin: 1em 0 1em 1.7em;
+      padding-left: 1em;
+      border-left: 2px solid #e6e6e6;
+      color: #606060;
+    }
+    code {
+      font-family: Menlo, Monaco, 'Lucida Console', Consolas, monospace;
+      font-size: 85%;
+      margin: 0;
+    }
+    pre {
+      margin: 1em 0;
+      overflow: auto;
+    }
+    pre code {
+      padding: 0;
+      overflow: visible;
+      overflow-wrap: normal;
+    }
+    .sourceCode {
+     background-color: transparent;
+     overflow: visible;
+    }
+    hr {
+      background-color: #1a1a1a;
+      border: none;
+      height: 1px;
+      margin: 1em 0;
+    }
+    table {
+      margin: 1em 0;
+      border-collapse: collapse;
+      width: 100%;
+      overflow-x: auto;
+      display: block;
+      font-variant-numeric: lining-nums tabular-nums;
+    }
+    table caption {
+      margin-bottom: 0.75em;
+    }
+    tbody {
+      margin-top: 0.5em;
+      border-top: 1px solid #1a1a1a;
+      border-bottom: 1px solid #1a1a1a;
+    }
+    th {
+      border-top: 1px solid #1a1a1a;
+      padding: 0.25em 0.5em 0.25em 0.5em;
+    }
+    td {
+      padding: 0.125em 0.5em 0.25em 0.5em;
+    }
+    header {
+      margin-bottom: 4em;
+      text-align: center;
+    }
+    #TOC li {
+      list-style: none;
+    }
+    #TOC a:not(:hover) {
+      text-decoration: none;
+    }
+    code{white-space: pre-wrap;}
+    span.smallcaps{font-variant: small-caps;}
+    span.underline{text-decoration: underline;}
+    div.column{display: inline-block; vertical-align: top; width: 50%;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    ul.task-list{list-style: none;}
+    .display.math{display: block; text-align: center; margin: 0.5rem auto;}
+  </style>
+  <!--[if lt IE 9]>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv-printshiv.min.js"></script>
+  <![endif]-->
+</head>
+<body>
+<header id="title-block-header">
+<h1 class="title">Piecewise Testable and Extensions</h1>
+<p class="author">Dakotah Lambert</p>
+</header>
+<h2 id="a-review-and-the-goal">A Review and the Goal</h2>
+<p>Recall that a variety is a class of monoids closed under taking products, submonoids, and quotients. The union and intersection operations can be implemented as a monoid product followed by taking a submonoid and then a quotient by the appropriate new Myhill relation. So classes defined by monoid varieties are closed under these operations. A language and its complement share the same monoid, so these classes are closed under the Boolean operations.</p>
+<p>So far we have discussed monoids in the finite (regular), aperiodic (star-free), trivial (1), and semilattice (CB) varieties. We have also discussed a general method for making a semigroup-based class generalizing the monoid-based one: if 𝐕 is a variety of monoids, then 𝐋𝐕 is a variety of semigroups defined by 𝑒⁢𝑆⁢𝑒∈𝐕. This gave us generalized definite (from 1) and locally testable (from CB). For each 𝐋𝐕 class, there is a tier-based variant, 𝐓𝐋𝐕, characterized by the language being in 𝐋𝐕 after removing all of the symbols that form self-loops everywhere. Note that there should also be an 𝐌𝐓𝐋𝐕 which is actually closed under the Boolean operations, but these multi-tier classes do not appear in our tables.</p>
+<p>The following table summarizes the classes discussed so far, as well as the three new ones from this session. Inclusions hold downward (GD is contained in LT for example) and leftward (CB is contained in LT). One diagonal is then guaranteed (LT contains 1), but the other is not (CB and GD are incomparable).</p>
+<table>
+<thead>
+<tr class="header">
+<th style="text-align: center;"></th>
+<th style="text-align: center;">𝐕</th>
+<th style="text-align: center;">𝐋𝐕</th>
+<th style="text-align: center;">𝐓𝐋𝐕</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;">𝐅𝐢𝐧</td>
+<td style="text-align: center;">Reg</td>
+<td style="text-align: center;">?</td>
+<td style="text-align: center;">?</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">𝐀𝐩</td>
+<td style="text-align: center;">SF</td>
+<td style="text-align: center;">?</td>
+<td style="text-align: center;">?</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">𝐉</td>
+<td style="text-align: center;">PT</td>
+<td style="text-align: center;">LP</td>
+<td style="text-align: center;">TLP</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">𝐉<sub>𝐈</sub></td>
+<td style="text-align: center;">CB</td>
+<td style="text-align: center;">LT</td>
+<td style="text-align: center;">TLT</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">𝟏</td>
+<td style="text-align: center;">1</td>
+<td style="text-align: center;">GD</td>
+<td style="text-align: center;">TGD</td>
+</tr>
+</tbody>
+</table>
+<h2 id="greens-relations">Green’s Relations</h2>
+<p>Named for James Alexander Green, Green’s relations are commonly used to describe the structure of semigroups and monoids. We only really need one of them right now, but we’ll introduce three. Represented by fancy L (𝓛), R (𝓡), and J (𝓙), they are defined as follows:</p>
+<table>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;">𝑎𝓛𝑏</td>
+<td style="text-align: center;">𝑀⁢𝑎=𝑀⁢𝑏</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">𝑎𝓡𝑏</td>
+<td style="text-align: center;">𝑎⁢𝑀=𝑏⁢𝑀</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">𝑎𝓙𝑏</td>
+<td style="text-align: center;">𝑀⁢𝑎⁢𝑀=𝑀⁢𝑏⁢𝑀</td>
+</tr>
+</tbody>
+</table>
+<p>There is a lot to be said about these relations, but all we need is that a monoid is <strong>trivial under</strong> a relation ⁓ iff 𝑎⁓𝑏 holds in all and only those cases where 𝑎=𝑏. As an aside, there is an 𝓗 relation where star-free is 𝓗-trivial.</p>
+<h2 id="piecewise-testable">Piecewise Testable</h2>
+<p>The base class of this session is the piecewise testable (PT) class, characterized by 𝓙-trivial monoids. That is, 𝑎𝓙𝑏 iff 𝑎=𝑏, or in other words 𝑀⁢𝑎⁢𝑀=𝑀⁢𝑏⁢𝑀 iff 𝑎=𝑏. These are the languages in which there is some integer 𝑘 for which the language is defined by Boolean combinations of subsequences of length up to 𝑘. That is, if two words have the same set of subsequences of length up to 𝑘, then they must be treated identically, both in or both out. A subsequence is like a substring but using general precedence instead of adjacency.</p>
+<p>As an exercise, one might show that all semilattices with identity (commutative and idempotent monoids) are 𝓙-trivial. This would prove the containment of the CB row in the newly generated PT row.</p>
+<p>For now, let us see an example of a piecewise testable language. This one is defined as follows:</p>
+<ul>
+<li>nothing follows a “c”</li>
+<li>no two things follow a “b”, and</li>
+<li>having an “a‥c” subsequence implies having a “b”</li>
+</ul>
+<p><img src="./pt-non-ra.svg" alt="A state machine of four states. All are accepting, and state 1 is initial. State 1 goes to states 4, 2, and 3 on a, b, and c respectively. State 2 goes to state 3 on everything. State 3 itself has no out-edges. State 4 has a self-loop on a, and goes to 2 on b." /><br /> Its syntactic monoid is shown below both as a graph and as a table.<br /> <img src="./pt-non-ra-mon.svg" alt="The syntactic monoid of the above. The full table is provided below." /></p>
+<table>
+<thead>
+<tr class="header">
+<th style="text-align: center;"></th>
+<th style="text-align: center;">λ</th>
+<th style="text-align: center;">a</th>
+<th style="text-align: center;">b</th>
+<th style="text-align: center;">c</th>
+<th style="text-align: center;">aa</th>
+<th style="text-align: center;">ab</th>
+<th style="text-align: center;">ba</th>
+<th style="text-align: center;">ca</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;">λ</td>
+<td style="text-align: center;">λ</td>
+<td style="text-align: center;">a</td>
+<td style="text-align: center;">b</td>
+<td style="text-align: center;">c</td>
+<td style="text-align: center;">aa</td>
+<td style="text-align: center;">ab</td>
+<td style="text-align: center;">ba</td>
+<td style="text-align: center;">ca</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">a</td>
+<td style="text-align: center;">a</td>
+<td style="text-align: center;">aa</td>
+<td style="text-align: center;">ab</td>
+<td style="text-align: center;">ca</td>
+<td style="text-align: center;">aa</td>
+<td style="text-align: center;">ab</td>
+<td style="text-align: center;">ba</td>
+<td style="text-align: center;">ca</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">b</td>
+<td style="text-align: center;">b</td>
+<td style="text-align: center;">ba</td>
+<td style="text-align: center;">ba</td>
+<td style="text-align: center;">ba</td>
+<td style="text-align: center;">ca</td>
+<td style="text-align: center;">ca</td>
+<td style="text-align: center;">ca</td>
+<td style="text-align: center;">ca</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">c</td>
+<td style="text-align: center;">c</td>
+<td style="text-align: center;">ca</td>
+<td style="text-align: center;">ca</td>
+<td style="text-align: center;">ca</td>
+<td style="text-align: center;">ca</td>
+<td style="text-align: center;">ca</td>
+<td style="text-align: center;">ca</td>
+<td style="text-align: center;">ca</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">aa</td>
+<td style="text-align: center;">aa</td>
+<td style="text-align: center;">aa</td>
+<td style="text-align: center;">ab</td>
+<td style="text-align: center;">ca</td>
+<td style="text-align: center;">aa</td>
+<td style="text-align: center;">ab</td>
+<td style="text-align: center;">ba</td>
+<td style="text-align: center;">ca</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">ab</td>
+<td style="text-align: center;">ab</td>
+<td style="text-align: center;">ba</td>
+<td style="text-align: center;">ba</td>
+<td style="text-align: center;">ba</td>
+<td style="text-align: center;">ca</td>
+<td style="text-align: center;">ca</td>
+<td style="text-align: center;">ca</td>
+<td style="text-align: center;">ca</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">ba</td>
+<td style="text-align: center;">ba</td>
+<td style="text-align: center;">ca</td>
+<td style="text-align: center;">ca</td>
+<td style="text-align: center;">ca</td>
+<td style="text-align: center;">ca</td>
+<td style="text-align: center;">ca</td>
+<td style="text-align: center;">ca</td>
+<td style="text-align: center;">ca</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">ca</td>
+<td style="text-align: center;">ca</td>
+<td style="text-align: center;">ca</td>
+<td style="text-align: center;">ca</td>
+<td style="text-align: center;">ca</td>
+<td style="text-align: center;">ca</td>
+<td style="text-align: center;">ca</td>
+<td style="text-align: center;">ca</td>
+<td style="text-align: center;">ca</td>
+</tr>
+</tbody>
+</table>
+<p>There are no self-loops on the identity, so we know we can’t need a tier-based class to describe this. (It is in fact locally testable, strictly local even, if you want to verify that.) We can show that it is piecewise testable, in one of two ways. First, we could construct the two-sided ideal of every element. For each 𝑥, find 𝑥⁢𝑀 (the set of elements in the 𝑥 row of the table), then then find 𝑀⁢𝑥⁢𝑀 as the union of the columns of each result.</p>
+<table>
+<thead>
+<tr class="header">
+<th style="text-align: center;">𝑥</th>
+<th style="text-align: center;">𝑥⁢𝑀</th>
+<th style="text-align: center;">𝑀⁢𝑥⁢𝑀</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;">λ</td>
+<td style="text-align: center;">{λ,a,b,c,aa,ab,ba,ca}</td>
+<td style="text-align: center;">{λ,a,b,c,aa,ab,ba,ca}</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">a</td>
+<td style="text-align: center;">{a,aa,ab,ca}</td>
+<td style="text-align: center;">{a,aa,ab,ba,ca}</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">b</td>
+<td style="text-align: center;">{b,ba,ca}</td>
+<td style="text-align: center;">{b,ab,ba,ca}</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">c</td>
+<td style="text-align: center;">{c,ca}</td>
+<td style="text-align: center;">{c,ba,ca}</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">aa</td>
+<td style="text-align: center;">{aa,ab,ca}</td>
+<td style="text-align: center;">{aa,ab,ca}</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">ab</td>
+<td style="text-align: center;">{ab,ba,ca}</td>
+<td style="text-align: center;">{ab,ba,ca}</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">ba</td>
+<td style="text-align: center;">{ba,ca}</td>
+<td style="text-align: center;">{ba,ca}</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">ca</td>
+<td style="text-align: center;">{ca}</td>
+<td style="text-align: center;">{ca}</td>
+</tr>
+</tbody>
+</table>
+<p>This however requires a ton of work, computing all of these ideals for every element. (It is however the method that <code>plebby</code> and the LTK currently uses.)</p>
+<h2 id="a-shortcut">A Shortcut</h2>
+<p>First, let us define a notation. 𝑀<sub>𝑒</sub> is the submonoid of 𝑀 generated by the set {𝑔 : 𝑒=𝑢⁢𝑔⁢𝑣 for some 𝑢 and 𝑣}. Recall that the elements of the monoid are equivalence classes of strings. Intuitively, 𝑀<sub>𝑒</sub> is the set of elements that include words made up of only letters that appear in some word in 𝑒. This is dealing with a restricted alphabet, just like tier-based things.</p>
+<p>One can show that a language is 𝓙-trivial iff for all idempotents 𝑒, it holds that 𝑀<sub>𝑒</sub>⁢𝑒⁢𝑀<sub>𝑒</sub>=𝑒. Note in our table above we have only three idempotents: 𝐸(𝑀)={⟦λ⟧,⟦aa⟧,⟦ca⟧}. We still need to construct the two-sided ideals 𝑀⁢𝑥⁢𝑀 for each letter 𝑥, but we don’t have to do this for the entire monoid. Notice that ⟦aa⟧ is in the two-sided ideal of ⟦a⟧, but not of any other letter. So the subalphabet we use is just {a}. And ⟦λ⟧ is not in any two-sided ideals, so its subalphabet is ∅. And ⟦ca⟧ is a zero, so its subalphabet is the entire alphabet.</p>
+<table>
+<thead>
+<tr class="header">
+<th style="text-align: center;">𝑒</th>
+<th style="text-align: center;">𝑀<sub>𝑒</sub></th>
+<th style="text-align: center;">𝑀<sub>𝑒</sub>⁢𝑒</th>
+<th style="text-align: center;">𝑀<sub>𝑒</sub>⁢𝑒⁢𝑀<sub>𝑒</sub></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;">λ</td>
+<td style="text-align: center;">{λ}</td>
+<td style="text-align: center;">{λ}</td>
+<td style="text-align: center;">{λ}</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">aa</td>
+<td style="text-align: center;">{λ,a,aa}</td>
+<td style="text-align: center;">{aa}</td>
+<td style="text-align: center;">{aa}</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">ca</td>
+<td style="text-align: center;">𝑀</td>
+<td style="text-align: center;">{ca}</td>
+<td style="text-align: center;">{ca}</td>
+</tr>
+</tbody>
+</table>
+<p>Now we see that 𝑀<sub>𝑒</sub>⁢𝑒⁢𝑀<sub>𝑒</sub>=𝑒 for all idempotents 𝑒, verifying piecewise testability with much less work.</p>
+<p>One can prove that in a PT language’s syntactic monoid, all cycles are self-loops and all idempotents have self-loops on every symbol that reaches them. The implication is that for an alphabet Σ, there can be only 2<sup>|Σ|</sup> idempotents. So for an alphabet of size 3 like we’ve mostly been dealing with, there can only be up to 8 idempotents no matter how big the monoid is.</p>
+<h2 id="the-locally-version-of-pt">The “Locally” Version of PT</h2>
+<p>Replace 𝑀 by 𝑒⁢𝑆⁢𝑒 in the definition of piecewise testable in order to get its “locally” variant, here called LP. Note that it may not be the case that every 𝑎 is in 𝑒⁢𝑆⁢𝑒, so we need to restrict ourselves to elements of the form 𝑒⁢𝑎⁢𝑒. But then a language is LP iff 𝑒⁢𝑆⁢𝑒⁢𝑒⁢𝑎⁢𝑒⁢𝑒⁢𝑆⁢𝑒=𝑒⁢𝑆⁢𝑒⁢𝑒⁢𝑏⁢𝑒⁢𝑒⁢𝑆⁢𝑒 implies 𝑒⁢𝑎⁢𝑒=𝑒⁢𝑏⁢𝑒 for all idempoents 𝑒 and for all elements 𝑎 and 𝑏.</p>
+<p>We didn’t discuss an example of this, but the language requiring an “ab” substring eventually followed by a “c”, shown below as a DFA, is in this class. One may as an exercise construct its 12-state monoid and verify that it is not in TLT or anything that contains, nor is it in PT, but it is in LP. Each local subsemigroup is 𝓙-trivial. <br /> <img src="./lp.svg" alt="A state machine of four states. State 1, the initial state, has self-loops on b and c while going to 2 on a. State 2 loops on a, goes to 3 on b, and goes to 1 on c. State 3 loops on a and b while going to 4 on c. State 4 is an accepting sink." /></p>
+<p>We haven’t proven for sure that LP is “piecewise-locally testable”, but if it is, then it would be those languages where words with the same set of 𝑗-subsequences made up of 𝑘-blocks (subsequences of substrings) are treated identically, both in or both out.</p>
+<p>Oh and there’s a tier-based class, TLP. We know how those go. Take the above language and stick self-loops on “d” everywhere and you have a member of TLP that isn’t in LP.</p>
+<h2 id="summary">Summary</h2>
+<p>By this point, we’ve reached what we believe to be an upper bound of complexity on phonological surface patterns. Stress patterns for example are all contained in a subclass of LP. There are more classes above where we have left off, including those defined by first-order logics restricted to two variables. We also have not discussed locally threshold testable, which corresponds to first-order definability with successor alone. This class is contained by LP and contains LT, so it would be somewhere in the middle there. Other classes might be discussed as the need arises, but for now we end the exploration of stringsets and move on to functions.</p>
+<p>Note that there are many possible classes between the rows of our table. Any time you propose a class that is describable by a monoid variety, it will have a place in the leftmost column. The “locally” variant will then exist, and its tier-based variant as well. By another generalization we have not yet encountered, there will also be new rows which will continue to spiral upward. In other words, proposing one class now yields several others.</p>
+</body>
+</html>
