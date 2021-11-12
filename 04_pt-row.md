@@ -58,26 +58,26 @@ Green's relations are commonly used to describe
 the structure of semigroups and monoids.
 We only really need one of them right now,
 but we'll introduce three.
-Represented by fancy L (𝓛), R (𝓡), and J (𝓙),
+Represented by fancy L (ℒ), R (ℛ), and J (𝒥),
 they are defined as follows:
 
 |     |           |
 |:---:|:---------:|
-| 𝑎𝓛𝑏 |  𝑀⁢𝑎=𝑀⁢𝑏  |
-| 𝑎𝓡𝑏 |  𝑎⁢𝑀=𝑏⁢𝑀   |
-| 𝑎𝓙𝑏 | 𝑀⁢𝑎⁢𝑀=𝑀⁢𝑏⁢𝑀 |
+| 𝑎ℒ𝑏 |  𝑀⁢𝑎=𝑀⁢𝑏  |
+| 𝑎ℛ𝑏 |  𝑎⁢𝑀=𝑏⁢𝑀   |
+| 𝑎𝒥𝑏 | 𝑀⁢𝑎⁢𝑀=𝑀⁢𝑏⁢𝑀 |
 
 There is a lot to be said about these relations,
 but all we need is that a monoid is **trivial under** a relation ⁓
 iff 𝑎⁓𝑏 holds in all and only those cases where 𝑎=𝑏.
-As an aside, there is an 𝓗 relation where
-star-free is 𝓗-trivial.
+As an aside, there is an ℋ relation where
+star-free is ℋ-trivial.
 
 ## Piecewise Testable
 
 The base class of this session is the piecewise testable (PT) class,
-characterized by 𝓙-trivial monoids.
-That is, 𝑎𝓙𝑏 iff 𝑎=𝑏, or in other words
+characterized by 𝒥-trivial monoids.
+That is, 𝑎𝒥𝑏 iff 𝑎=𝑏, or in other words
 𝑀⁢𝑎⁢𝑀=𝑀⁢𝑏⁢𝑀 iff 𝑎=𝑏.
 These are the languages in which there is some integer 𝑘
 for which the language is defined by Boolean combinations
@@ -90,7 +90,7 @@ A subsequence is like a substring but using general precedence
 instead of adjacency.
 
 As an exercise, one might show that all semilattices with identity
-(commutative and idempotent monoids) are 𝓙-trivial.
+(commutative and idempotent monoids) are 𝒥-trivial.
 This would prove the containment of the CB row
 in the newly generated PT row.
 
@@ -162,7 +162,7 @@ in some word in 𝑒.
 This is dealing with a restricted alphabet,
 just like tier-based things.
 
-One can show that a language is 𝓙-trivial iff
+One can show that a language is 𝒥-trivial iff
 for all idempotents 𝑒, it holds that
 𝑀<sub>𝑒</sub>⁢𝑒⁢𝑀<sub>𝑒</sub>=𝑒.
 Note in our table above we have only three idempotents:
@@ -211,7 +211,7 @@ shown below as a DFA, is in this class.
 One may as an exercise construct its 12-state monoid
 and verify that it is not in TLT or anything that contains,
 nor is it in PT, but it is in LP.
-Each local subsemigroup is 𝓙-trivial.
+Each local subsemigroup is 𝒥-trivial.
 <br />
 ![A state machine of four states.
   State 1, the initial state,
