@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <meta name="author" content="Dakotah Lambert" />
+  <title>Lifting to Functions</title>
+  <style>
+    html {
+      line-height: 1.5;
+      font-family: Georgia, serif;
+      font-size: 20px;
+      color: #1a1a1a;
+      background-color: #fdfdfd;
+    }
+    body {
+      margin: 0 auto;
+      max-width: 36em;
+      padding-left: 50px;
+      padding-right: 50px;
+      padding-top: 50px;
+      padding-bottom: 50px;
+      hyphens: auto;
+      overflow-wrap: break-word;
+      text-rendering: optimizeLegibility;
+      font-kerning: normal;
+    }
+    @media (max-width: 600px) {
+      body {
+        font-size: 0.9em;
+        padding: 1em;
+      }
+    }
+    @media print {
+      body {
+        background-color: transparent;
+        color: black;
+        font-size: 12pt;
+      }
+      p, h2, h3 {
+        orphans: 3;
+        widows: 3;
+      }
+      h2, h3, h4 {
+        page-break-after: avoid;
+      }
+    }
+    p {
+      margin: 1em 0;
+    }
+    a {
+      color: #1a1a1a;
+    }
+    a:visited {
+      color: #1a1a1a;
+    }
+    img {
+      max-width: 100%;
+    }
+    h1, h2, h3, h4, h5, h6 {
+      margin-top: 1.4em;
+    }
+    h5, h6 {
+      font-size: 1em;
+      font-style: italic;
+    }
+    h6 {
+      font-weight: normal;
+    }
+    ol, ul {
+      padding-left: 1.7em;
+      margin-top: 1em;
+    }
+    li > ol, li > ul {
+      margin-top: 0;
+    }
+    blockquote {
+      margin: 1em 0 1em 1.7em;
+      padding-left: 1em;
+      border-left: 2px solid #e6e6e6;
+      color: #606060;
+    }
+    code {
+      font-family: Menlo, Monaco, 'Lucida Console', Consolas, monospace;
+      font-size: 85%;
+      margin: 0;
+    }
+    pre {
+      margin: 1em 0;
+      overflow: auto;
+    }
+    pre code {
+      padding: 0;
+      overflow: visible;
+      overflow-wrap: normal;
+    }
+    .sourceCode {
+     background-color: transparent;
+     overflow: visible;
+    }
+    hr {
+      background-color: #1a1a1a;
+      border: none;
+      height: 1px;
+      margin: 1em 0;
+    }
+    table {
+      margin: 1em 0;
+      border-collapse: collapse;
+      width: 100%;
+      overflow-x: auto;
+      display: block;
+      font-variant-numeric: lining-nums tabular-nums;
+    }
+    table caption {
+      margin-bottom: 0.75em;
+    }
+    tbody {
+      margin-top: 0.5em;
+      border-top: 1px solid #1a1a1a;
+      border-bottom: 1px solid #1a1a1a;
+    }
+    th {
+      border-top: 1px solid #1a1a1a;
+      padding: 0.25em 0.5em 0.25em 0.5em;
+    }
+    td {
+      padding: 0.125em 0.5em 0.25em 0.5em;
+    }
+    header {
+      margin-bottom: 4em;
+      text-align: center;
+    }
+    #TOC li {
+      list-style: none;
+    }
+    #TOC a:not(:hover) {
+      text-decoration: none;
+    }
+    code{white-space: pre-wrap;}
+    span.smallcaps{font-variant: small-caps;}
+    span.underline{text-decoration: underline;}
+    div.column{display: inline-block; vertical-align: top; width: 50%;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    ul.task-list{list-style: none;}
+    .display.math{display: block; text-align: center; margin: 0.5rem auto;}
+  </style>
+  <!--[if lt IE 9]>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv-printshiv.min.js"></script>
+  <![endif]-->
+</head>
+<body>
+<header id="title-block-header">
+<h1 class="title">Lifting to Functions</h1>
+<p class="author">Dakotah Lambert</p>
+</header>
+<p>The Nerode equivalence relation defined by a string language says that two words are equivalent iff there is no suffix that distinguishes them: 𝑎⁓𝑏 iff for all 𝑣, 𝑎⁣𝑣 and 𝑏⁣𝑣 are either both in or both out of the language. Equivalence classes under this relation define the states of the minimal deterministic acceptor that represents the language. An equivalence defined by the <strong>tails</strong> function describes the same thing over string-to-string functions, which strings can be distinguished by some suffix.</p>
+<p>𝑇<sub>𝑓</sub>(𝑥)={⟨𝑦,𝑣⟩:𝑓(𝑥⁣𝑦)=lcp(𝑥⁣Σ*)⁣𝑣}</p>
+<p>The natural extension of the Nerode relation to functions is then 𝑎⁓𝑏 iff for all 𝑣, 𝑇(𝑎⁣𝑣)=𝑇(𝑏⁣𝑣). In this definition, lcp(𝑥⁣Σ*) is the portion of the output that is reasonably attributed to 𝑥, leaving 𝑣 as the portion attributed to 𝑦. That is, 𝑇<sub>𝑓</sub>(𝑥) yields a function mapping strings to what they contribute to the output when suffixed onto an input 𝑥.</p>
+<p>The Myhill relation is a two-sided version of the Nerode relation: 𝑎⁓𝑏 iff for all 𝑢 and 𝑣, 𝑢⁣𝑎⁣𝑣 and 𝑢⁣𝑏⁣𝑣 are either both in or both out of the language. In other words, we describe the contributions of prefixes and suffixes. I define the <strong>contexts</strong> function to describe this.</p>
+<p>𝐶<sub>𝑓</sub>(𝑥)={⟨𝑢,𝑦,𝑣⟩:𝑓(𝑢⁣𝑥⁣𝑦)=lcp(𝑢⁣𝑥⁣Σ*)⁣𝑣}</p>
+<p>In other words, 𝐶<sub>𝑓</sub>(𝑥) yields a function mapping two-sided contexts to what they contribute to the output when an input 𝑥 is placed into those contexts. This analogizes the Myhill relation, and allows use to form a quotient monoid of Σ* by the same algorithm used for acceptors.</p>
+<p>Consider the following transducer: <br /> <img src="./ivv.svg" alt="A transducer of three states, labelled λ, V, and VT. λ has self-loops on D and T, and a transition to V on V, each outputting faithfully. V has a faithful self-loop on V, a faithful edge on D to λ, and an edge to VT on T which outputs nothing. VT has edges on D and T to λ, outputting TD and TT, respectively, and an edge to V on V which outputs DV. The outputs associated with the states are λ for λ and V, and T for VT." /> <br /> It represents a rule where T becomes D when between two V. We write this as T→D/V__V. Following the same process which converts minimal acceptors into (right Cayley graphs of) syntactic monoids, we can convert this transducer into the monoid described by the following graph: <img src="./ivv-mon.svg" alt="The syntactic monoid associated with the above transducer." /></p>
+<p>Given this presentation, it looks as if the outputs are irrelevant. And in a sense they are — the outputs define the shape of the minimal transducer, and the monoid is derived from this shape, so anything that retains the same minimal structure is going to have the same monoid. An acceptor with the same structure as that minimal transducer follows: <br /> <img src="./evt.svg" alt="Acceptor for “end on VT”." /> <br /> This accepts the set of strings that end on VT, a <strong>definite language</strong>.</p>
+<p>Then T→D/V__V is a <strong>definite function</strong>. (Verify: check that 𝑒⁢𝑆⁢𝑒=𝑒.) However, it is worth pointing out that directionality matters. The reversal of a definite language is a reverse-definite language (how clever), but this definite function acts identically whether reading the string left-to-right or right-to-left. So it is definite in both directions, and not reverse-definite in either. Functions that are definable by a deterministic transducer in one direction are not even necessarily definable at all by a determinsitic transducer in the other direction.</p>
+<p>So I propose that for each string-language class there are multiple corresponding string-to-string function classes. Here we have encountered a function that is both →Def (definite when reading input left-to-right) and ←Def (definite when reading input right-to-left). One might even say this particular function is ↔︎Def. I’m going to pronounce the arrows as “front” (→), “back” (←), and “bidirectionally” (↔︎), until somebody proposes something better.</p>
+</body>
+</html>
