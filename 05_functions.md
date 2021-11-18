@@ -84,7 +84,7 @@ This accepts the set of strings that end on VT,
 a **definite language**.
 
 Then T→D/V__V is a **definite function**.
-(Verify: check that 𝑒⁢𝑆⁢𝑒=𝑒.)
+(Verify: check that 𝑆⁢𝑒=𝑒.)
 However, it is worth pointing out that directionality matters.
 The reversal of a definite language
 is a reverse-definite language (how clever),
