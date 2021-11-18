@@ -64,6 +64,7 @@ Following the same process which converts minimal acceptors
 into (right Cayley graphs of) syntactic monoids,
 we can convert this transducer into
 the monoid described by the following graph:
+<br />
 ![The syntactic monoid
 associated with the above transducer.](./ivv-mon.svg)
 
